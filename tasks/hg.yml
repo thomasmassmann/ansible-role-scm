@@ -1,0 +1,21 @@
+---
+# Set up and configure a hg repository.
+
+- name: SCM | setting variables
+  set_fact:
+    repo: '{{ item }}'
+    repo_dest: '{{ repo_root }}/{{ item.dest }}'
+
+- name: 'SCM | hg clone {{ repo.url }} to {{ repo_dest }}'
+  hg:
+    repo: '{{ repo.url }}'
+    dest: '{{ repo_dest }}'
+    update: '{{ hg_force_update }}'
+
+- name: 'SCM | hgrc for {{ repo_dest }}'
+  ini_file:
+    dest: '{{ repo_dest }}/.hg/hgrc'
+    section: ui
+    option: username
+    value: '{{ user_name }} <{{ user_email }}>'
+  when: user_name != '' and user_email != ''

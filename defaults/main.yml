@@ -1,0 +1,10 @@
+---
+# defaults file for scm
+repo_list: []
+repo_root: ''
+
+user_email: ''
+user_name: ''
+
+git_force_update: 'no'
+hg_force_update: 'no'

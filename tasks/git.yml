@@ -1,0 +1,30 @@
+---
+# Set up and configure a git repository.
+
+- name: SCM | setting variables
+  set_fact:
+    repo: '{{ item }}'
+    repo_dest: '{{ repo_root }}/{{ item.dest }}'
+
+- name: 'SCM | git clone {{ repo.url }} to {{ repo_dest }}'
+  git:
+    repo: '{{ repo.url }}'
+    dest: '{{ repo_dest }}'
+    update: '{{ git_force_update }}'
+
+- name: 'SCM | git config | checking for {{ repo_dest }}'
+  shell: 'cat {{ repo_dest }}/.git/config'
+  register: git_config
+  changed_when: False
+
+- name: 'SCM | git config | set user name for {{ repo_dest }}'
+  shell: 'git config user.name "{{ user_name }}"'
+  args:
+    chdir: '{{ repo_dest }}'
+  when: user_name != '' and git_config.stdout.find('{{ user_name }}') == -1
+
+- name: 'SCM | git config | set user email for {{ repo_dest }}'
+  shell: 'git config user.email "{{ user_email }}"'
+  args:
+    chdir: '{{ repo_dest }}'
+  when: user_email != '' and git_config.stdout.find('{{ user_email }}') == -1

@@ -1,0 +1,24 @@
+---
+
+# Variable setup.
+- name: Include variables.
+  include_vars: main.yml
+
+- name: SCM | create directories
+  file:
+    path: "{{ repo_root }}"
+    state: directory
+    mode: 0755
+  when: repo_root != ''
+
+- name: Show info about git updates
+  debug: msg='Git repositories will be updated. This may take a long time...'
+  when: git_force_update == 'yes'
+
+- include: git.yml
+  with_items: '{{ repo_list }}'
+  when: item.type | default('git') == 'git'
+
+- include: hg.yml
+  with_items: '{{ repo_list }}'
+  when: item.type | default('git') == 'hg'
