@@ -38,7 +38,12 @@ The user name for the repository author when adding commits.
 
 ### git_force_update
 
-If no (default), do not retrieve new revisions from the remote repository.
+If *no* (default), do not retrieve new revisions from the origin repository.
+
+
+### hg_force_update
+
+If *no* (default), do not retrieve new revisions from the origin repository
 
 
 ## Dependencies
