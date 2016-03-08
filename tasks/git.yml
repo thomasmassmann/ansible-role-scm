@@ -11,6 +11,7 @@
     repo: '{{ repo.url }}'
     dest: '{{ repo_dest }}'
     update: '{{ git_force_update }}'
+  ignore_errors: '{{ git_force_update }}'
 
 - name: 'SCM | git config | checking for {{ repo_dest }}'
   shell: 'cat {{ repo_dest }}/.git/config'

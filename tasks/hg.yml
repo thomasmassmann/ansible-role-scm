@@ -11,6 +11,7 @@
     repo: '{{ repo.url }}'
     dest: '{{ repo_dest }}'
     update: '{{ hg_force_update }}'
+  ignore_errors: '{{ hg_force_update}}'
 
 - name: 'SCM | hgrc for {{ repo_dest }}'
   ini_file:
